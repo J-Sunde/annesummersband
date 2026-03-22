@@ -1145,140 +1145,6 @@ footer{
    RED MULTIPLY OVERLAYS — scattered ink blobs
    bleeding off page, collage/zine aesthetic
 ============================================ */
-.red-overlays{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:50;
-  overflow:hidden;
-}
-.ro{
-  position:absolute;
-  background:var(--red);
-  will-change:transform;
-}
-/* Light mode: multiply = red tint over paper */
-[data-theme="light"] .ro{ mix-blend-mode:multiply; opacity:.55; }
-/* Dark mode: screen = red glow over black */
-[data-theme="dark"] .ro{ mix-blend-mode:screen; opacity:.13; }
-
-/* Shape 1 — fat diagonal slash, top-left bleed */
-.ro-1{
-  width:160px;height:580px;
-  top:-100px;left:-55px;
-  transform:rotate(16deg);
-  clip-path:polygon(18% 0%,82% 2%,100% 98%,2% 100%);
-}
-[data-theme="light"] .ro-1{opacity:.48}
-[data-theme="dark"] .ro-1{opacity:.11}
-
-/* Shape 2 — wide horizontal smear, right-edge bleed */
-.ro-2{
-  width:280px;height:75px;
-  top:26%;right:-70px;
-  transform:rotate(-5deg);
-  clip-path:polygon(0% 18%,100% 0%,100% 100%,4% 82%);
-}
-
-/* Shape 3 — rough block, mid-left bleed */
-.ro-3{
-  width:130px;height:200px;
-  top:44%;left:-45px;
-  transform:rotate(3deg);
-  clip-path:polygon(22% 0%,100% 4%,96% 100%,0% 92%);
-}
-[data-theme="light"] .ro-3{opacity:.42}
-
-/* Shape 4 — razor-thin diagonal rule, crosses full width */
-.ro-4{
-  width:110%;height:22px;
-  top:61%;left:-5%;
-  transform:rotate(-2.2deg);
-  clip-path:polygon(0% 25%,100% 0%,100% 75%,0% 100%);
-}
-[data-theme="light"] .ro-4{opacity:.38}
-[data-theme="dark"] .ro-4{opacity:.08}
-
-/* Shape 5 — fat blob, bottom-right corner bleed */
-.ro-5{
-  width:240px;height:330px;
-  bottom:-90px;right:-50px;
-  transform:rotate(-11deg);
-  clip-path:polygon(28% 2%,98% 8%,92% 98%,2% 88%);
-}
-[data-theme="light"] .ro-5{opacity:.5}
-[data-theme="dark"] .ro-5{opacity:.1}
-
-/* Shape 6 — small tilted stamp, mid-right float */
-.ro-6{
-  width:85px;height:85px;
-  top:37%;right:4%;
-  transform:rotate(13deg);
-  clip-path:polygon(2% 2%,94% 4%,98% 96%,5% 98%);
-}
-[data-theme="light"] .ro-6{opacity:.45}
-[data-theme="dark"] .ro-6{opacity:.1}
-
-/* Shape 7 — long thin diagonal, lower-left */
-.ro-7{
-  width:55px;height:380px;
-  bottom:18%;left:9%;
-  transform:rotate(-23deg);
-  clip-path:polygon(8% 0%,92% 4%,88% 100%,4% 98%);
-}
-[data-theme="light"] .ro-7{opacity:.35}
-[data-theme="dark"] .ro-7{opacity:.07}
-
-/* Shape 8 — wide wedge, top-right bleed */
-.ro-8{
-  width:210px;height:110px;
-  top:-25px;right:-35px;
-  transform:rotate(7deg);
-  clip-path:polygon(2% 38%,100% 0%,100% 100%,12% 100%);
-}
-[data-theme="light"] .ro-8{opacity:.5}
-[data-theme="dark"] .ro-8{opacity:.1}
-
-/* Shape 9 — horizontal bar, 80% down, left bleed */
-.ro-9{
-  width:190px;height:45px;
-  top:79%;left:-25px;
-  transform:rotate(-3deg);
-  clip-path:polygon(0% 0%,100% 14%,100% 86%,0% 100%);
-}
-[data-theme="light"] .ro-9{opacity:.4}
-[data-theme="dark"] .ro-9{opacity:.08}
-
-/* Shape 10 — tall thin strip, right edge */
-.ro-10{
-  width:45px;height:280px;
-  top:52%;right:-8px;
-  transform:rotate(5deg);
-  clip-path:polygon(4% 0%,100% 8%,92% 100%,0% 94%);
-}
-[data-theme="light"] .ro-10{opacity:.5}
-[data-theme="dark"] .ro-10{opacity:.09}
-
-/* Shape 11 — horizontal mid smear left */
-.ro-11{
-  width:120px;height:35px;
-  top:15%;left:-20px;
-  transform:rotate(2deg);
-  clip-path:polygon(0% 10%,100% 0%,100% 90%,0% 100%);
-}
-[data-theme="light"] .ro-11{opacity:.4}
-[data-theme="dark"] .ro-11{opacity:.08}
-
-/* Shape 12 — bottom-left corner bleed */
-.ro-12{
-  width:180px;height:180px;
-  bottom:-40px;left:-40px;
-  transform:rotate(-8deg);
-  clip-path:polygon(20% 0%,100% 15%,80% 100%,0% 80%);
-}
-[data-theme="light"] .ro-12{opacity:.45}
-[data-theme="dark"] .ro-12{opacity:.1}
-
 /* ============================================
    FLYER ARCHIVE SECTION
 ============================================ */
@@ -1436,8 +1302,7 @@ footer{
 
 
 <!-- RED MULTIPLY OVERLAYS — fixed layer, bleeds off edges -->
-<div class="red-overlays" id="redOverlays">
-  <div class="ro ro-1"></div>
+
   <div class="ro ro-2"></div>
   <div class="ro ro-3"></div>
   <div class="ro ro-4"></div>
@@ -2150,31 +2015,7 @@ footer{
     window.addEventListener('resize', function(){ setTimeout(layout,100); });
   })();
 
-  // Red overlay parallax — each shape drifts at a different scroll rate
-  (function(){
-    var shapes = document.querySelectorAll('.ro');
-    var rates  = [0.05,-0.07,0.09,-0.03,0.06,-0.10,0.08,-0.05,0.07,-0.08,0.04,-0.06];
-    var baseTransforms = [];
-    shapes.forEach(function(el,i){
-      // Store the rotate/translate already set by CSS
-      baseTransforms[i] = window.getComputedStyle(el).transform || '';
-    });
-    var ticking = false;
-    function onScroll(){
-      if(ticking) return;
-      ticking = true;
-      requestAnimationFrame(function(){
-        var sy = window.scrollY;
-        shapes.forEach(function(el,i){
-          var r = rates[i] || 0.05;
-          el.style.marginTop = (sy * r) + 'px';
-        });
-        ticking = false;
-      });
-    }
-    window.addEventListener('scroll', onScroll, {passive:true});
   })();
-})();
 </script>
 </body>
 </html>
